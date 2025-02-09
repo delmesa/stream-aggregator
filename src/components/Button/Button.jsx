@@ -4,7 +4,7 @@ import styles from "./Button.module.css";
  * JSX component for button element.
  * @param {object} props
  * @param {Node} props.children
- * @return component
+ * @return {JSX.Element}
  */
 const Button = ({ children, ...props }) => {
     return (
