@@ -1,0 +1,8 @@
+.button {
+	font-family: inherit;
+	font-size: 0.8em;
+	padding: 0.4em 0.8em;
+	border: 1px solid #00000040;
+	border-radius: 8px;
+	cursor: pointer;
+}
