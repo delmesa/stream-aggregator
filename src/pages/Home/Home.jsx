@@ -8,16 +8,18 @@ import styles from './Home.module.css';
 const Home = () => {
     return (
 		<div className={styles.page}>
-			<section>
+			<section className={styles.home}>
 				<Header />
-				<p className={styles.introText}>
-					Lorem ipsum odor amet, consectetuer adipiscing elit. Convallis laoreet id litora netus conubia in, ligula taciti vivamus. Lectus commodo mattis in venenatis habitant montes libero risus.
-				</p>
-				<main className={styles.playlistSelectionWrapper}>
-					{/* playlist importer and playlist selector */}
-				</main>
+				<div className={styles.centerContent}>
+					<p className={styles.introText}>
+						Lorem ipsum odor amet, consectetuer adipiscing elit. Convallis laoreet id litora netus conubia in, ligula taciti vivamus. Lectus commodo mattis in venenatis habitant montes libero risus.
+					</p>
+					<main className={styles.playlistSelectionWrapper}>
+						{/* playlist importer and playlist selector */}
+					</main>
+				</div>
 			</section>
-			<section>
+			<section className={styles.sideBar}>
 				{/* miniplayer and queue controls */}
 			</section>
 		</div>

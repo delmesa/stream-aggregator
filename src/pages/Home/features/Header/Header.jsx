@@ -13,7 +13,9 @@ const Header = () => {
 				<p className={styles.title}>Stream Aggregator</p>
 				<p className={styles.sub}>Create the mega mix you&apos;ve always wanted.</p>
 			</div>
-			<Button className={styles.loginBtn}>Login</Button>
+			<Button className={styles.loginBtn}>
+				<p>Register</p>
+			</Button>
 		</header>
 	);
 };
