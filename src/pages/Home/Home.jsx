@@ -14,7 +14,7 @@ const Home = () => {
 					<p className={styles.introText}>
 						Lorem ipsum odor amet, consectetuer adipiscing elit. Convallis laoreet id litora netus conubia in, ligula taciti vivamus. Lectus commodo mattis in venenatis habitant montes libero risus.
 					</p>
-					<main className={styles.playlistSelectionWrapper}>
+					<main className={styles.collectionSelectionWrapper}>
 						{/* playlist importer and playlist selector */}
 					</main>
 				</div>
