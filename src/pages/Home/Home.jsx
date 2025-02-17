@@ -1,3 +1,4 @@
+import CollectionDisplay from '@/features/CollectionDisplay/components/CollectionDisplay';
 import Header from './features/Header/Header';
 import styles from './Home.module.css';
 
@@ -16,6 +17,7 @@ const Home = () => {
 					</p>
 					<main className={styles.collectionSelectionWrapper}>
 						{/* playlist importer and playlist selector */}
+						<CollectionDisplay />
 					</main>
 				</div>
 			</section>

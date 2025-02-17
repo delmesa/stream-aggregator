@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import axios from "axios";
 
 const YOUTUBE_API_URL = "https://www.googleapis.com/youtube/v3";
@@ -96,6 +97,7 @@ retrieveFromResource["youtube"] = {
         const playlistInfo = [];
         for (let i = 0; i < detailsItemsArray.length; i++) {
             const plDetails = {
+				id: nanoid(),
                 externalId: detailsItemsArray[i].id,
                 _etag: detailsItemsArray[i].etag,
                 title: detailsItemsArray[i].snippet.title,
