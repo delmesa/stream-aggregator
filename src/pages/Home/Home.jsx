@@ -6,6 +6,7 @@ import Button from '@/components/Button/Button';
 import { useCollectionStore } from '@/features/CollectionDisplay/hooks/useCollectionStore';
 import { createCollections } from '@/features/CollectionDisplay/services/collectionApi';
 import Footer from './features/Footer/Footer';
+import { useState } from 'react';
 
 /**
  * The Home page. Contains details about the site and displays the playlist importer and selector.
@@ -13,6 +14,21 @@ import Footer from './features/Footer/Footer';
  */
 const Home = () => {
 	const addCollections = useCollectionStore(state => state.addCollections);
+	const [selectedCollectionIds, setSelectedCollectionIds] = useState([]); 
+
+	const filterBySelected = (collection) => {
+		return selectedCollectionIds.some((id) => collection.id === id);
+	};
+
+	const toggleCollectionSelected = (collection) => {
+		setSelectedCollectionIds((state) => {
+			if (state.some(id => collection.id === id)) {
+				return state.filter((id) => collection.id !== id);
+			} else {
+				return [...state, collection.id];
+			}
+		});
+	};
 
 	const onImporterSubmit = (e) => {
 		e.preventDefault();
@@ -45,9 +61,16 @@ const Home = () => {
 						</form>
 						<div>
 							<CollectionDisplay 
+								className={styles.collectionPicker}
+								filterPredicate={filterBySelected}
+								hideRest={false}
+								onClickItem={toggleCollectionSelected}
 								noContentMessage={"No collections found. Import a playlist to save it as a new collection."}
 							/>
 							<CollectionDisplay 
+								className={styles.collectionPicker}
+								filterPredicate={filterBySelected}
+								onClickItem={toggleCollectionSelected}
 								noContentMessage={"Select at least 1 collection to get started."}
 							/>
 							<Button>Shuffle</Button>

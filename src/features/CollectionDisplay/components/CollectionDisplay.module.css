@@ -8,6 +8,13 @@
 .collectionDisplay > div {
 	background-color: #fcfcfc;
 	padding: 0.3em;
+	
+	cursor: default;
+	transition: background-color 150ms;
+}
+
+.collectionDisplay > div:hover {
+	background-color: #eeeeee;
 }
 
 .collectionDisplay > div:first-child {
@@ -22,18 +29,18 @@
 	border-bottom: var(--border-subtle)
 }
 
-.collectionDisplay .itemContent {
+.itemContent {
 	padding-inline: 0.5em;
 }
 
-.collectionDisplay.noContent {
+.noContent {
 	display: flex;
 	justify-content: center;
 	text-align: center;
 	padding: 2em;
 }
 
-.collectionDisplay.noContent p {
+.noContent p {
 	margin-top: 2em;
 	opacity: 0.6;
 }

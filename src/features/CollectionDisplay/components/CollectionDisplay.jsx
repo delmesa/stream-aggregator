@@ -6,19 +6,37 @@ import styles from "./CollectionDisplay.module.css";
  *
  * @param props
  * @param {Function} props.filterPredicate
+ * @param {Function} props.onClickItem - The action to run when an item of the display is clicked. Provides the relevant collection object.
+ * @param {string} props.hideRest - When true (default), does not show filtered out elements in display. When false, matching elements will have a special style applied.
+ * @param {string} props.noContentMessage
  * @returns {JSX.Element}
  */
-const CollectionDisplay = ({ filterPredicate, noContentMessage }) => {
+const CollectionDisplay = ({
+    filterPredicate = () => true,
+    onClickItem = () => {},
+    hideRest = true,
+    noContentMessage,
+	...props
+}) => {
     const collections = useCollectionStore((state) => state.collections);
-    const filteredCollections = filterPredicate
-        ? collections.filter(filterPredicate)
-        : collections;
+    // const filteredCollections = filterPredicate
+    //     ? collections.filter(filterPredicate)
+    //     : collections;
 
-    return filteredCollections.length > 0 ? (
-        <div className={styles.collectionDisplay}>
-            {filteredCollections.map((e, i) => {
+    const hasContent =
+        (!hideRest && collections.length) || collections.some(filterPredicate);
+
+    return hasContent ? (
+        <div {...props} className={`${styles.collectionDisplay} ${props.className || ""}`}>
+            {collections.map((e, i) => {
+                const isFilterMatch = filterPredicate(e);
+                if (hideRest && !isFilterMatch) return;
                 return (
-                    <div key={i}>
+                    <div
+                        key={i}
+                        data-matches-filter={isFilterMatch}
+                        onClick={() => onClickItem(e)}
+                    >
                         <div className={styles.itemContent}>
                             <p>{e.title}</p>
                         </div>
@@ -27,11 +45,9 @@ const CollectionDisplay = ({ filterPredicate, noContentMessage }) => {
             })}
         </div>
     ) : (
-        <div
-            className={`${styles.collectionDisplay} ${styles.noContent}`}
-        >
-			<p>{noContentMessage}</p>
-		</div>
+        <div {...props} className={`${styles.collectionDisplay} ${styles.noContent} ${props.className || ""}`}>
+            <p>{noContentMessage}</p>
+        </div>
     );
 };
 

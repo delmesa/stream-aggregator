@@ -65,12 +65,15 @@
 	gap: 0.5rem;
 }
 
-.collectionSelectionWrapper > div > div:first-child {
+.collectionPicker:first-of-type {
 	grid-area: a;
-
 }
 
-.collectionSelectionWrapper > div > div:last-of-type {
+.collectionPicker:first-of-type > div[data-matches-filter="true"] {
+	background-color: #dddddd;
+}
+
+.collectionPicker:last-of-type {
 	grid-area: b;
 }
 
