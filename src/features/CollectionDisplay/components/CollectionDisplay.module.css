@@ -1,20 +1,39 @@
 .collectionDisplay {
-	background-color: #fcfcfc;
+	background-color: #d6dce0;
 
-	padding-block: 0.12em;
-	
 	overflow-y: auto;
 	clip-path: inset(0 round 4px);
 }
 
 .collectionDisplay > div {
+	background-color: #fcfcfc;
 	padding: 0.3em;
 }
 
-.collectionDisplay > :not( div:last-child ) {
+.collectionDisplay > div:first-child {
+	padding-top: .42em;
+}
+
+.collectionDisplay > div:last-child {
+	padding-bottom: .42em;
+}
+
+.collectionDisplay > div:not( div:last-child ) {
 	border-bottom: var(--border-subtle)
 }
 
 .collectionDisplay .itemContent {
 	padding-inline: 0.5em;
+}
+
+.collectionDisplay.noContent {
+	display: flex;
+	justify-content: center;
+	text-align: center;
+	padding: 2em;
+}
+
+.collectionDisplay.noContent p {
+	margin-top: 2em;
+	opacity: 0.6;
 }

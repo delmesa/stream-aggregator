@@ -16,12 +16,14 @@ const Home = () => {
 
 	const onImporterSubmit = (e) => {
 		e.preventDefault();
+		const inputElement = e.target.querySelector("input");
 		const inputText = (new FormData(e.target)).get("playlistId").trim();
 		if (inputText === "") return;
 
 		// playlist host hardcoded for now
 		createCollections("youtube", [inputText]).then(res => {
 			addCollections(res);
+			inputElement.value = "";
 		}).catch(error => {
 			console.log(error);
 		});
@@ -42,8 +44,12 @@ const Home = () => {
 							<Button type="submit" id="importer">Import</Button>
 						</form>
 						<div>
-							<CollectionDisplay />
-							<CollectionDisplay />
+							<CollectionDisplay 
+								noContentMessage={"No collections found. Import a playlist to save it as a new collection."}
+							/>
+							<CollectionDisplay 
+								noContentMessage={"Select at least 1 collection to get started."}
+							/>
 							<Button>Shuffle</Button>
 						</div>
 					</main>

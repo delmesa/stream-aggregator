@@ -8,24 +8,30 @@ import styles from "./CollectionDisplay.module.css";
  * @param {Function} props.filterPredicate
  * @returns {JSX.Element}
  */
-const CollectionDisplay = ({ filterPredicate }) => {
+const CollectionDisplay = ({ filterPredicate, noContentMessage }) => {
     const collections = useCollectionStore((state) => state.collections);
     const filteredCollections = filterPredicate
         ? collections.filter(filterPredicate)
         : collections;
 
-    return (
+    return filteredCollections.length > 0 ? (
         <div className={styles.collectionDisplay}>
             {filteredCollections.map((e, i) => {
                 return (
-					<div key={i}>
-						<div className={styles.itemContent}>
-							<p>{e.title}</p>
-						</div>
-					</div>
-				);
+                    <div key={i}>
+                        <div className={styles.itemContent}>
+                            <p>{e.title}</p>
+                        </div>
+                    </div>
+                );
             })}
         </div>
+    ) : (
+        <div
+            className={`${styles.collectionDisplay} ${styles.noContent}`}
+        >
+			<p>{noContentMessage}</p>
+		</div>
     );
 };
 
