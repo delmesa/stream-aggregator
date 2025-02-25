@@ -5,10 +5,9 @@ export const useCollectionStore = create(
 	persist(
 		(set) => ({
 			collections: [],
-			addCollection: (newCollection) => set(state => {
-				const clone = state.slice();
-				clone.push(newCollection);
-				return clone;
+			addCollections: (newCollections) => set(state => {
+				const clone = state.collections.slice();
+				return {...state, collections: clone.concat(newCollections)};
 			})
 		}),
 		{ name: "user-collections" }

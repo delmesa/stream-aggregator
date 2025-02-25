@@ -1,4 +1,5 @@
 import { useCollectionStore } from "../hooks/useCollectionStore";
+import styles from "./CollectionDisplay.module.css";
 
 /**
  * A display that lists all user collections, applying a filter if supplied.
@@ -14,9 +15,15 @@ const CollectionDisplay = ({ filterPredicate }) => {
         : collections;
 
     return (
-        <div>
+        <div className={styles.collectionDisplay}>
             {filteredCollections.map((e, i) => {
-                return <p key={i}>{e.title}</p>;
+                return (
+					<div key={i}>
+						<div className={styles.itemContent}>
+							<p>{e.title}</p>
+						</div>
+					</div>
+				);
             })}
         </div>
     );

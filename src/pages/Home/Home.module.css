@@ -15,7 +15,9 @@
 
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
 	width: 60%;
+	gap: 1rem;
 	margin: 0 auto;
 }
 
@@ -24,5 +26,60 @@
 	color: var(--text-on-dark);
 
 	border-radius: 4px;
-	padding: 1em 1.5em;
+	padding: 1rem 1.5rem;
+}
+
+.collectionSelectionWrapper {
+	display: flex;
+	flex-direction: column;
+
+	background-color: #06060660;
+	gap: 0.5rem;
+	min-height: 320px;
+
+	font-size: 18px;
+
+	border-radius: 4px;
+	padding: 1rem;
+}
+
+.collectionSelectionWrapper > form {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.collectionSelectionWrapper > form input {
+	flex-grow: 1;
+}
+
+.collectionSelectionWrapper > div {
+	flex-grow: 1;
+
+	height: 40svh;
+	display: grid;
+	grid-template-areas: 
+		"a b"
+		"a c";
+	/* grid-template-rows: 1fr; */
+	grid-template-columns: 1fr 1fr;
+	gap: 0.5rem;
+}
+
+.collectionSelectionWrapper > div > div:first-child {
+	grid-area: a;
+
+}
+
+.collectionSelectionWrapper > div > div:last-of-type {
+	grid-area: b;
+}
+
+.collectionSelectionWrapper > div > button {
+	grid-area: c;
+
+	background-color: #3f3f3f;
+	color: var(--text-on-dark);
+
+	font-size: 1.2em;
+	font-weight: bold;
 }

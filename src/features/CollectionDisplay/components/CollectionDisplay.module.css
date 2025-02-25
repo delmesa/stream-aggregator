@@ -1,0 +1,20 @@
+.collectionDisplay {
+	background-color: #fcfcfc;
+
+	padding-block: 0.12em;
+	
+	overflow-y: auto;
+	clip-path: inset(0 round 4px);
+}
+
+.collectionDisplay > div {
+	padding: 0.3em;
+}
+
+.collectionDisplay > :not( div:last-child ) {
+	border-bottom: var(--border-subtle)
+}
+
+.collectionDisplay .itemContent {
+	padding-inline: 0.5em;
+}
