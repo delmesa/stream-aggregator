@@ -1,0 +1,11 @@
+.footer {
+	background-color: #0e1011;
+	color: var(--text-on-dark);
+
+	height: 50px; /* temporary until there's content in footer */
+	padding: 0.3rem;
+	display: flex;
+	gap: 1em;
+
+	border-top: solid 4px hsl(from var(--theme-color-primary) h calc(s*.1) calc(l*.4) / 1);
+}

@@ -5,6 +5,7 @@ import Input from '@/components/Input/Input';
 import Button from '@/components/Button/Button';
 import { useCollectionStore } from '@/features/CollectionDisplay/hooks/useCollectionStore';
 import { createCollections } from '@/features/CollectionDisplay/services/collectionApi';
+import Footer from './features/Footer/Footer';
 
 /**
  * The Home page. Contains details about the site and displays the playlist importer and selector.
@@ -47,6 +48,7 @@ const Home = () => {
 						</div>
 					</main>
 				</div>
+				<Footer />
 			</section>
 			<section className={styles.sideBar}>
 				{/* miniplayer and queue controls */}
