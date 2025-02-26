@@ -16,19 +16,22 @@ const CollectionDisplay = ({
     onClickItem = () => {},
     hideRest = true,
     noContentMessage,
-	...props
+    ...props
 }) => {
-    const collections = useCollectionStore((state) => state.collections);
-    // const filteredCollections = filterPredicate
-    //     ? collections.filter(filterPredicate)
-    //     : collections;
+    const collectionsArray = Object.values(
+        useCollectionStore((state) => state.collections)
+    );
 
     const hasContent =
-        (!hideRest && collections.length) || collections.some(filterPredicate);
+        (!hideRest && collectionsArray.length) ||
+        collectionsArray.some(filterPredicate);
 
     return hasContent ? (
-        <div {...props} className={`${styles.collectionDisplay} ${props.className || ""}`}>
-            {collections.map((e, i) => {
+        <div
+            {...props}
+            className={`${styles.collectionDisplay} ${props.className || ""}`}
+        >
+            {collectionsArray.map((e, i) => {
                 const isFilterMatch = filterPredicate(e);
                 if (hideRest && !isFilterMatch) return;
                 return (
@@ -45,7 +48,12 @@ const CollectionDisplay = ({
             })}
         </div>
     ) : (
-        <div {...props} className={`${styles.collectionDisplay} ${styles.noContent} ${props.className || ""}`}>
+        <div
+            {...props}
+            className={`${styles.collectionDisplay} ${styles.noContent} ${
+                props.className || ""
+            }`}
+        >
             <p>{noContentMessage}</p>
         </div>
     );

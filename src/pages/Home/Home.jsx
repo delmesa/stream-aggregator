@@ -3,8 +3,8 @@ import Header from './features/Header/Header';
 import styles from './Home.module.css';
 import Input from '@/components/Input/Input';
 import Button from '@/components/Button/Button';
-import { useCollectionStore } from '@/features/CollectionDisplay/hooks/useCollectionStore';
-import { createCollections } from '@/features/CollectionDisplay/services/collectionApi';
+import { addCollections } from '@/features/CollectionDisplay/hooks/useCollectionStore';
+import { createCollections } from '@/features/CollectionDisplay/services/collections';
 import Footer from './features/Footer/Footer';
 import { useState } from 'react';
 
@@ -13,7 +13,6 @@ import { useState } from 'react';
  * @returns {JSX.Element}
  */
 const Home = () => {
-	const addCollections = useCollectionStore(state => state.addCollections);
 	const [selectedCollectionIds, setSelectedCollectionIds] = useState([]); 
 
 	const filterBySelected = (collection) => {
