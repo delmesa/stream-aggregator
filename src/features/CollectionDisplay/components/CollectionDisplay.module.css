@@ -1,6 +1,7 @@
 .collectionDisplay {
 	background-color: #d6dce0;
 
+	box-shadow: inset 0 0 3px 2px rgb(0 0 0 / .2);
 	overflow-y: auto;
 	clip-path: inset(0 round 4px);
 }
@@ -8,6 +9,7 @@
 .collectionDisplay > div {
 	background-color: #fcfcfc;
 	padding: 0.3em;
+	box-shadow: 0 3px 2px rgb(0 0 0 / .1);
 	
 	cursor: default;
 	transition: background-color 150ms;
