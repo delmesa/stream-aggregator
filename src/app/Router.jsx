@@ -1,4 +1,5 @@
 import Home from "@/pages/Home/Home";
+import PlaySession from "@/pages/PlaySession/PlaySession";
 import { RouterProvider } from "react-router-dom";
 import { createBrowserRouter } from "react-router-dom";
 
@@ -9,7 +10,7 @@ const router = createBrowserRouter([
     },
 	{
 		path: "/player",
-		element: <></>
+		element: <PlaySession />
 	}
 ]);
 

@@ -23,6 +23,7 @@
 body {
 	height: 100dvh;
 	margin: 0;
+	background-color: var(--bg-color-primary);
 }
 
 #root {

@@ -45,7 +45,7 @@ const Home = () => {
 	};
 
     return (
-		<div className={styles.page}>
+		<div id={styles.page}>
 			<section className={styles.home}>
 				<Header />
 				<div className={styles.centerContent}>
