@@ -1,10 +1,10 @@
-import CollectionDisplay from '@/features/CollectionDisplay/components/CollectionDisplay';
+import CollectionDisplay from '@/features/collections/components/CollectionDisplay/CollectionDisplay';
 import Header from './features/Header/Header';
 import styles from './Home.module.css';
 import Input from '@/components/Input/Input';
 import Button from '@/components/Button/Button';
-import { addCollections } from '@/features/CollectionDisplay/hooks/useCollectionStore';
-import { createCollections } from '@/features/CollectionDisplay/services/collections';
+import { addCollections } from '@/features/collections/hooks/useCollectionStore';
+import { createCollections } from '@/features/collections/services/collections';
 import Footer from './features/Footer/Footer';
 import { useState } from 'react';
 

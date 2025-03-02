@@ -1,4 +1,4 @@
-import { useCollectionStore } from "../hooks/useCollectionStore";
+import { useCollectionStore } from "../../hooks/useCollectionStore";
 import styles from "./CollectionDisplay.module.css";
 
 /**
