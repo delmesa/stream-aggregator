@@ -1,4 +1,7 @@
+import CurrentPlayingModule from "@/features/CurrentlyPlayingModule/CurrentPlayingModule";
 import styles from "./PlaySession.module.css";
+import CurrentQueueModule from "@/features/CurrentQueueModule/CurrentQueueModule";
+import CurrentSessionControlsModule from "@/config/CurrentSessionControlsModule/CurrentSessionControlsModule";
 
 /**
  * The page that holds the video player and play queue.
@@ -14,15 +17,9 @@ const PlaySession = () => {
                 <p>playerarea</p>
             </section>
             <section className={styles.sessionArea}>
-                <div className={styles.currentlyPlayingContainer}>
-                    <p>currentplaying</p>
-                </div>
-                <div className={styles.queueContainer}>
-                    <p>queue</p>
-                </div>
-                <div className={styles.sessionControls}>
-                    <p>sessioncontrols</p>
-                </div>
+                <CurrentPlayingModule />
+                <CurrentQueueModule />
+				<CurrentSessionControlsModule />
             </section>
         </div>
     );
