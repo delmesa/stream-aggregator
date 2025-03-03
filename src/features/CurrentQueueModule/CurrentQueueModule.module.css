@@ -1,3 +1,63 @@
 .queueModule {
+	padding: 12px;
+}
 
+.queueModule > div {
+	display: grid;
+	grid-template-areas: 
+		"index title  title"
+		"index artist host";
+	grid-template-columns: auto 1fr 5rem;
+	padding: 0.4rem;
+
+	cursor: pointer;
+}
+
+.queueModule > div:hover {
+	background-color: #ffffff0c;
+}
+
+.queueModule .activeTrack {
+	background-color: #ffffff15 !important;
+}
+
+.queueModule .activeTrack .trackTitle,
+.queueModule .activeTrack .trackIndex {
+	color: #ff5f94;
+	font-weight: bold;
+}
+
+.queueModule > div:not( div:last-child ) {
+	border-bottom: 1px solid #ffffff15;
+}
+
+.queueModule .trackIndex {
+	grid-area: index;
+	min-width: 2.5rem;
+	margin-block: auto;
+	margin-right: 1ch;
+	font-size: 1.1rem;
+	text-align: center;
+}
+
+.queueModule .trackTitle {
+	grid-area: title;
+	font-size: 1.1rem;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.queueModule .trackArtist {
+	grid-area: artist;
+}
+
+.queueModule .trackHost {
+	grid-area: host;
+	margin-right: 0.4rem;
+	text-align: end;
+}
+
+.queueModule .trackArtist,
+.queueModule .trackHost {
+	color: #ffffff90;
 }

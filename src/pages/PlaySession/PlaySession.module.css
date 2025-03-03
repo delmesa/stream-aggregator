@@ -1,7 +1,6 @@
 #page {
 	display: grid;
 	grid-template-columns: 0.8fr 3fr 1.2fr;
-	height: 100svh;
 }
 
 .miniHome {
@@ -17,6 +16,8 @@
 	color: var(--text-on-dark);
 	display: grid;
 	grid-template-rows: auto 1fr auto;
+	box-sizing: border-box;
+	height: 100svh;
 	gap: 0.6em;
 
 	padding: 0.6em;
@@ -24,4 +25,9 @@
 
 .sessionArea > div {
 	background-color: #24242e;
+	clip-path: inset(0 round 4px);
+}
+
+.sessionArea > div:nth-child(2) {
+	overflow-y: auto;
 }

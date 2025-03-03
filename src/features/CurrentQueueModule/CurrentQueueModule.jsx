@@ -7,12 +7,12 @@ import styles from "./CurrentQueueModule.module.css";
  * @returns {JSX.Element}
  */
 const CurrentQueueModule = () => {
-    const { collection } = useSession((state) => state);
+    const { collection, position } = useSession((state) => state);
 
     return (
         <div className={styles.queueModule}>
             {collection.content.map((track, index) => (
-                <div key={index}>
+                <div className={(index === position) && styles.activeTrack} key={index}>
                     <p className={styles.trackIndex}>{index + 1}</p>
                     <p className={styles.trackTitle}>{track.title}</p>
                     <p className={styles.trackArtist}>
