@@ -1,7 +1,7 @@
 import CurrentPlayingModule from "@/features/CurrentlyPlayingModule/CurrentPlayingModule";
 import styles from "./PlaySession.module.css";
 import CurrentQueueModule from "@/features/CurrentQueueModule/CurrentQueueModule";
-import CurrentSessionControlsModule from "@/config/CurrentSessionControlsModule/CurrentSessionControlsModule";
+import CurrentSessionControlsModule from "@/features/CurrentSessionControlsModule/CurrentSessionControlsModule";
 
 /**
  * The page that holds the video player and play queue.
