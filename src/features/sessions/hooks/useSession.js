@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { findSessions } from "../services/sessions";
+import { findSessions, updateSession } from "../services/sessions";
 
 export const useSession = create(() => ({
     id: null,
@@ -49,10 +49,9 @@ export const goToTrack = (index) =>
             );
         };
 
-        return {
-			...state,
-			position: index,
-        };
+        const newState = { ...state, position: index };
+		updateSession(state.id, newState);
+		return newState;
     });
 
 /**
@@ -64,3 +63,4 @@ export const setCurrentSession = (sessionId) =>
         if (!sessionId) return state;
         return Object.values(findSessions((e) => sessionId === e.id))[0];
     });
+	

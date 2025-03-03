@@ -1,5 +1,5 @@
 import { hostNames } from "@/utils/hostNames";
-import { useSession } from "../sessions/hooks/useSession";
+import { goToTrack, useSession } from "../sessions/hooks/useSession";
 import styles from "./CurrentQueueModule.module.css";
 
 /**
@@ -12,7 +12,13 @@ const CurrentQueueModule = () => {
     return (
         <div className={styles.queueModule}>
             {collection.content.map((track, index) => (
-                <div className={(index === position) && styles.activeTrack} key={index}>
+                <div
+                    className={
+                        index === position ? styles.activeTrack : undefined
+                    }
+                    onClick={() => goToTrack(index)}
+                    key={index}
+                >
                     <p className={styles.trackIndex}>{index + 1}</p>
                     <p className={styles.trackTitle}>{track.title}</p>
                     <p className={styles.trackArtist}>
