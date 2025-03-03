@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { findSessions, updateSession } from "../services/sessions";
+import { shuffle } from "@/utils/shuffle";
 
 const DEFAULT_SESSION_STATE = {
     id: null,
@@ -55,6 +56,24 @@ export const goToTrack = (index) =>
 		updateSession(state.id, newState);
 		return newState;
     });
+
+/**
+ * Shuffles the tracks in this session's collection.
+ */
+export const shuffleTracks = () =>
+	useSession.setState((state) => {
+		const newState = {
+			...state,
+			collection: {
+				...state.collection,
+				content: shuffle(state.collection.content)
+			},
+			position: 0
+		}
+
+		updateSession(state.id, newState);
+		return newState;
+	});
 
 /**
  * Sets the current session in state to the session found by the given id

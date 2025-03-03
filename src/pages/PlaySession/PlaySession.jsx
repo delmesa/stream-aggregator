@@ -5,7 +5,7 @@ import CurrentSessionControlsModule from "@/features/CurrentSessionControlsModul
 import { useParams } from "react-router-dom";
 import {
     setCurrentSession,
-    useSession,
+    shuffleTracks,
 } from "@/features/sessions/hooks/useSession";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -16,11 +16,11 @@ import { useState } from "react";
  */
 const PlaySession = () => {
     const { sessionId } = useParams();
-    const session = useSession((state) => state);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         setCurrentSession(sessionId);
+        shuffleTracks();
         setIsLoading(false);
     }, [sessionId]);
 
