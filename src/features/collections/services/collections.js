@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { generateCollections } from "./collectionsApi";
+import { findCollections, generateCollections } from "./collectionsApi";
 
 /**
  * Invokes the creation of collections mirroring the playlists represented by the provided ids.
@@ -8,25 +8,26 @@ import { generateCollections } from "./collectionsApi";
  * @returns {object[]} the generated collections
  */
 export const importCollections = (host, ids) => {
-	// temporarily aliasing until back end is set up
-	return generateCollections(host, ids);
+    // temporarily aliasing until back end is set up
+    return generateCollections(host, ids);
 };
 
-export const localMergeCollections = (collections) => {
-	const mergedContent = [];
-	collections.forEach((e) => {
-		mergedContent.concat(e.content);
-	});
+export const mergeCollections = (collectionIds) => {
+    const collections = findCollections((e) => collectionIds.includes(e.id));
+    let mergedContent = [];
+    collections.forEach((e) => {
+        mergedContent = mergedContent.concat(e.content);
+    });
 
-	const newMergedCollection = {
-		id: nanoid(),
-		externalId: null,
-		_etag: null,
-		title: "Untitled Merged Collection",
-		itemCount: mergedContent.length,
-		host: "local",
-		content: mergedContent,
-	};
+    const newMergedCollection = {
+        id: nanoid(),
+        externalId: null,
+        _etag: null,
+        title: "Untitled Merged Collection",
+        itemCount: mergedContent.length,
+        host: "local",
+        content: mergedContent,
+    };
 
-	return newMergedCollection;
+    return newMergedCollection;
 };

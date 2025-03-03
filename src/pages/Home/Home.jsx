@@ -4,15 +4,18 @@ import styles from './Home.module.css';
 import Input from '@/components/Input/Input';
 import Button from '@/components/Button/Button';
 import { addCollections } from '@/features/collections/hooks/useCollectionStore';
-import { importCollections } from '@/features/collections/services/collections';
+import { importCollections, mergeCollections } from '@/features/collections/services/collections';
 import Footer from './features/Footer/Footer';
 import { useState } from 'react';
+import { createSession } from '@/features/sessions/services/sessions';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * The Home page. Contains details about the site and displays the playlist importer and selector.
  * @returns {JSX.Element}
  */
 const Home = () => {
+	const navigate = useNavigate();
 	const [selectedCollectionIds, setSelectedCollectionIds] = useState([]); 
 
 	const filterBySelected = (collection) => {
@@ -44,6 +47,12 @@ const Home = () => {
 		});
 	};
 
+	const onShuffleAction = () => {
+		if (selectedCollectionIds.length === 0) return;
+		const newSession = createSession(mergeCollections(selectedCollectionIds));
+		navigate("/player/" + newSession.id);
+	}
+
     return (
 		<div id={styles.page}>
 			<section className={styles.home}>
@@ -72,7 +81,7 @@ const Home = () => {
 								onClickItem={toggleCollectionSelected}
 								noContentMessage={"Select at least 1 collection to get started."}
 							/>
-							<Button>Shuffle</Button>
+							<Button onClick={onShuffleAction}>Shuffle</Button>
 						</div>
 					</main>
 				</div>

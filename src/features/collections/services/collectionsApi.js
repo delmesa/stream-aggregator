@@ -1,3 +1,4 @@
+import { getSessions } from "@/features/sessions/services/sessions";
 import { retrieveFromResource } from "./resources";
 
 const SAVED_COLLECTIONS_STORAGE_KEY = "user-collections";
@@ -43,6 +44,19 @@ export const generateCollections = (host, ids) => {
  */
 export const getCollections = () =>
     JSON.parse(localStorage.getItem(SAVED_COLLECTIONS_STORAGE_KEY)) || [];
+
+/**
+ * Gets all collections saved in localStorage that match a provided predicate.
+ * @returns {object[]} filtered collections
+ */
+export const findCollections = (predicate) => {
+    const collections = [];
+	for (const v of getCollections()) {
+		if (!predicate(v)) continue;
+		collections.push(v);
+	}
+	return collections;
+};
 
 // //
 

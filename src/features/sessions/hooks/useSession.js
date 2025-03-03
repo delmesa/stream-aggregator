@@ -47,7 +47,7 @@ export const goToTrack = (index) =>
             throw new Error(
                 `Track at index ${index} cannot be accessed because this index does not exist in the collection.`
             );
-        }
+        };
 
         return {
 			...state,
@@ -62,5 +62,5 @@ export const goToTrack = (index) =>
 export const setCurrentSession = (sessionId) =>
     useSession.setState((state) => {
         if (!sessionId) return state;
-        return findSessions((e) => sessionId === e.id)[0];
+        return Object.values(findSessions((e) => sessionId === e.id))[0];
     });

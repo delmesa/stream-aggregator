@@ -9,7 +9,7 @@ const router = createBrowserRouter([
 		element: <Home />
     },
 	{
-		path: "/player",
+		path: "/player/:sessionId",
 		element: <PlaySession />
 	}
 ]);
