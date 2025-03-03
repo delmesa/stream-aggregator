@@ -3,10 +3,7 @@ import styles from "./PlaySession.module.css";
 import CurrentQueueModule from "@/features/CurrentQueueModule/CurrentQueueModule";
 import CurrentSessionControlsModule from "@/features/CurrentSessionControlsModule/CurrentSessionControlsModule";
 import { useParams } from "react-router-dom";
-import {
-    setCurrentSession,
-    shuffleTracks,
-} from "@/features/sessions/hooks/useSession";
+import { setCurrentSession } from "@/features/sessions/hooks/useSession";
 import { useEffect } from "react";
 import { useState } from "react";
 
@@ -20,7 +17,6 @@ const PlaySession = () => {
 
     useEffect(() => {
         setCurrentSession(sessionId);
-        shuffleTracks();
         setIsLoading(false);
     }, [sessionId]);
 

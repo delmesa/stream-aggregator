@@ -9,6 +9,7 @@ import Footer from './features/Footer/Footer';
 import { useState } from 'react';
 import { createSession } from '@/features/sessions/services/sessions';
 import { useNavigate } from 'react-router-dom';
+import { shuffle } from '@/utils/shuffle';
 
 /**
  * The Home page. Contains details about the site and displays the playlist importer and selector.
@@ -47,9 +48,14 @@ const Home = () => {
 		});
 	};
 
-	const onShuffleAction = () => {
+	const onStartSessionAction = () => {
 		if (selectedCollectionIds.length === 0) return;
-		const newSession = createSession(mergeCollections(selectedCollectionIds));
+
+		// create and shuffle session
+		const newCollection = mergeCollections(selectedCollectionIds);
+		newCollection.content = shuffle(newCollection.content);
+		const newSession = createSession(newCollection);
+		
 		navigate("/player/" + newSession.id);
 	}
 
@@ -81,7 +87,7 @@ const Home = () => {
 								onClickItem={toggleCollectionSelected}
 								noContentMessage={"Select at least 1 collection to get started."}
 							/>
-							<Button onClick={onShuffleAction}>Shuffle</Button>
+							<Button onClick={onStartSessionAction}>Shuffle</Button>
 						</div>
 					</main>
 				</div>
