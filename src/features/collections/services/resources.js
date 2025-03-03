@@ -12,7 +12,7 @@ const streamerAxios = {
     }),
 };
 
-// key represents resource to pull from, and each entry needs a retrieveTracks and retrievePlaylists function
+// key represents resource to pull from, and each entry needs a retrieveTracks and generateCollections function
 const retrieveFromResource = {};
 
 retrieveFromResource["youtube"] = {
@@ -40,7 +40,7 @@ retrieveFromResource["youtube"] = {
         return formedVideos;
     },
     // retrieve playlists' details and their items' details as a collection
-    retrievePlaylists: async (ids) => {
+    generateCollections: async (ids) => {
         const MAX_PAGE_RESULTS = 50;
         // playlist details (title, length, etc.)
         const detailsParams = {
@@ -94,7 +94,7 @@ retrieveFromResource["youtube"] = {
             }));
         };
 
-        const playlistInfo = [];
+        const collections = [];
         for (let i = 0; i < detailsItemsArray.length; i++) {
             const plDetails = {
 				id: nanoid(),
@@ -122,13 +122,13 @@ retrieveFromResource["youtube"] = {
                 nextPageToken = nextContentData.nextPageToken;
             }
 
-            playlistInfo.push({
+            collections.push({
                 ...plDetails,
                 content: plContent,
             });
         }
 
-        return playlistInfo;
+        return collections;
     },
 };
 

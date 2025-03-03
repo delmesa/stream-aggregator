@@ -1,15 +1,12 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { getCollections } from "../services/collectionsApi";
 
-export const useCollectionStore = create(
-    persist(
-        () => ({
-            collections: {},
-            tempCollections: {},
-        }),
-        { name: "user-collections" }
-    )
-);
+export const useCollectionStore = create(() => {
+	const collections = getCollections().reduce((acc, curr) => {
+		return { ...acc, [curr.id]: curr };
+	}, {});
+	return { collections };
+});
 
 export const addCollections = (newCollections) =>
     useCollectionStore.setState((state) => {

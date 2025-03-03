@@ -4,7 +4,7 @@ import styles from './Home.module.css';
 import Input from '@/components/Input/Input';
 import Button from '@/components/Button/Button';
 import { addCollections } from '@/features/collections/hooks/useCollectionStore';
-import { createCollections } from '@/features/collections/services/collections';
+import { importCollections } from '@/features/collections/services/collections';
 import Footer from './features/Footer/Footer';
 import { useState } from 'react';
 
@@ -36,7 +36,7 @@ const Home = () => {
 		if (inputText === "") return;
 
 		// playlist host hardcoded for now
-		createCollections("youtube", [inputText]).then(res => {
+		importCollections("youtube", [inputText]).then(res => {
 			addCollections(res);
 			inputElement.value = "";
 		}).catch(error => {

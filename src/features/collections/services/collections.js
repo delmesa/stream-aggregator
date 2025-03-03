@@ -1,25 +1,20 @@
 import { nanoid } from "nanoid";
-import { retrieveFromResource } from "./resources"
+import { generateCollections } from "./collectionsApi";
 
-export const getTracks = (host, ids) => {
-	if (!Object.hasOwn(retrieveFromResource, host)) {
-		throw new Error(`Host '${host}' is not supported.`);
-	};
-
-	return retrieveFromResource[host].retrieveTracks(ids);
-};
-
-export const createCollections = (host, ids) => {
-	if (!Object.hasOwn(retrieveFromResource, host)) {
-		throw new Error(`Host '${host}' is not supported.`);
-	};
-
-	return retrieveFromResource[host].retrievePlaylists(ids);
+/**
+ * Invokes the creation of collections mirroring the playlists represented by the provided ids.
+ * @param {string} host - the domain to which the playlist ids belong
+ * @param {string[]} ids - the ids of the playlists from which to generate collections
+ * @returns {object[]} the generated collections
+ */
+export const importCollections = (host, ids) => {
+	// temporarily aliasing until back end is set up
+	return generateCollections(host, ids);
 };
 
 export const localMergeCollections = (collections) => {
 	const mergedContent = [];
-	collections.forEach(e => {
+	collections.forEach((e) => {
 		mergedContent.concat(e.content);
 	});
 
@@ -30,8 +25,8 @@ export const localMergeCollections = (collections) => {
 		title: "Untitled Merged Collection",
 		itemCount: mergedContent.length,
 		host: "local",
-		content: mergedContent
-	}
+		content: mergedContent,
+	};
 
 	return newMergedCollection;
 };

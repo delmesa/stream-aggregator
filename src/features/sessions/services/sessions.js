@@ -4,7 +4,7 @@ const SAVED_SESSIONS_STORAGE_KEY = "user-sessions";
 
 /**
  * Saves the provided session into localStorage.
- * @param {*} session - a session object to save
+ * @param {object} session - a session object to save
  * @returns the saved session
  */
 export const saveSession = (session) => {
@@ -16,12 +16,12 @@ export const saveSession = (session) => {
         SAVED_SESSIONS_STORAGE_KEY,
         JSON.stringify(savedSessions)
     );
-    return saveSession;
+    return session;
 };
 
 /**
  * Creates and saves a new session from a collection object.
- * @param {*} collection - a POJO collection object (either directly from the database or from a temporary collection)
+ * @param {object} collection - a POJO collection object (either directly from the database or from a temporary collection)
  * @returns {object} the newly created session
  */
 export const createSession = (collection) => {
