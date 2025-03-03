@@ -1,12 +1,14 @@
 import { create } from "zustand";
 import { findSessions, updateSession } from "../services/sessions";
 
-export const useSession = create(() => ({
+const DEFAULT_SESSION_STATE = {
     id: null,
-	collection: null,
+	collection: {},
 	position: 0,
 	lastAccessed: 0,
-}));
+};
+
+export const useSession = create(() => (DEFAULT_SESSION_STATE));
 
 /**
  * Gets the track represented by the current position of the session. This track object is the partial track provided by the collection object.
@@ -59,8 +61,7 @@ export const goToTrack = (index) =>
  * @param {string} sessionId
  */
 export const setCurrentSession = (sessionId) =>
-    useSession.setState((state) => {
-        if (!sessionId) return state;
-        return Object.values(findSessions((e) => sessionId === e.id))[0];
+    useSession.setState(() => {
+        if (!sessionId) return DEFAULT_SESSION_STATE;
+        return Object.values(findSessions((e) => sessionId === e.id))[0] || DEFAULT_SESSION_STATE;
     });
-	
