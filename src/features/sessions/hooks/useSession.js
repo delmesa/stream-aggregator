@@ -2,7 +2,10 @@ import { create } from "zustand";
 import { findSessions } from "../services/sessions";
 
 export const useSession = create(() => ({
-    currentSession: null,
+    id: null,
+	collection: null,
+	position: 0,
+	lastAccessed: 0,
 }));
 
 /**
@@ -12,7 +15,7 @@ export const useSession = create(() => ({
 export const getCurrentTrack = () => {
     return useSession.getState(
         (state) =>
-            state.currentSession.collections[state.currentSession.position]
+            state.collection[state.position]
     );
 };
 
@@ -21,7 +24,7 @@ export const getCurrentTrack = () => {
  */
 export const goToNextTrack = () => {
     useSession.getState((state) => {
-		goToTrack(state.currentSession.position + 1);
+		goToTrack(state.position + 1);
 	});
 };
 
@@ -30,7 +33,7 @@ export const goToNextTrack = () => {
  */
 export const goToPreviousTrack = () => {
 	useSession.getState((state) => {
-		goToTrack(state.currentSession.position - 1);
+		goToTrack(state.position - 1);
 	});
 };
 
@@ -40,32 +43,24 @@ export const goToPreviousTrack = () => {
  */
 export const goToTrack = (index) =>
     useSession.setState((state) => {
-        if (index < 0 || index >= state.currentSession.collections.length) {
+        if (index < 0 || index >= state.collection.length) {
             throw new Error(
                 `Track at index ${index} cannot be accessed because this index does not exist in the collection.`
             );
         }
 
         return {
-            ...state,
-            currentSession: {
-                ...state.currentSession,
-                position: index,
-            },
+			...state,
+			position: index,
         };
     });
 
 /**
  * Sets the current session in state to the session found by the given id
- * @param {*} sessionId
+ * @param {string} sessionId
  */
 export const setCurrentSession = (sessionId) =>
     useSession.setState((state) => {
         if (!sessionId) return state;
-
-        const nextSession = findSessions((e) => sessionId === e.id)[0];
-        return {
-            ...state,
-            currentSession: nextSession,
-        };
+        return findSessions((e) => sessionId === e.id)[0];
     });
