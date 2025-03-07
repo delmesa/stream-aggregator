@@ -1,6 +1,8 @@
 import { create } from "zustand";
 import { findSessions, updateSession } from "../services/sessions";
 import { shuffle } from "@/utils/shuffle";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const DEFAULT_SESSION_STATE = {
     id: null,
@@ -12,33 +14,38 @@ const DEFAULT_SESSION_STATE = {
 export const useSession = create(() => (DEFAULT_SESSION_STATE));
 
 /**
+ * Custom hook for current track so components that rely on the current track can hook into the state.
+ */
+export const useCurrentTrack = () => {
+	const [track, setTrack] = useState(getCurrentTrack());
+
+	useEffect(() => useSession.subscribe(() => {
+		setTrack(getCurrentTrack());
+	}))
+
+	return track;
+};
+
+/**
  * Gets the track represented by the current position of the session. This track object is the partial track provided by the collection object.
  * @returns {object} a partial track object from the collection
  */
 export const getCurrentTrack = () => {
-    return useSession.getState(
-        (state) =>
-            state.collection[state.position]
-    );
+    const state = useSession.getState();
+	return state.collection.content?.[state.position];
 };
 
 /**
  * Sets the current track to the next track in the collection, or does nothing if already at the end.
  */
-export const goToNextTrack = () => {
-    useSession.getState((state) => {
-		goToTrack(state.position + 1);
-	});
-};
+export const goToNextTrack = () =>
+	goToTrack(useSession.getState().position + 1);
 
 /**
  * Sets the current track to the previous track in the collection, or does nothing if already at the beginning.
  */
-export const goToPreviousTrack = () => {
-	useSession.getState((state) => {
-		goToTrack(state.position - 1);
-	});
-};
+export const goToPreviousTrack = () =>
+	goToTrack(useSession.getState().position + 1);
 
 /**
  * Sets the current track to the track at the provided index in the session's associated collection.

@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { setCurrentSession } from "@/features/sessions/hooks/useSession";
 import { useEffect } from "react";
 import { useState } from "react";
+import PlayerWithEmbedModule from "@/features/PlayerWithEmbedModule/PlayerWithEmbedModule";
 
 /**
  * The page that holds the video player and play queue.
@@ -26,7 +27,15 @@ const PlaySession = () => {
                 <p>minihome</p>
             </section>
             <section className={styles.playerArea}>
-                <p>playerarea</p>
+				{isLoading ? (
+					<div>
+						<p>...</p>
+					</div>
+				) : (
+					<div>
+						<PlayerWithEmbedModule />
+					</div>
+				)}
             </section>
             <section className={styles.sessionArea}>
                 {isLoading ? (
