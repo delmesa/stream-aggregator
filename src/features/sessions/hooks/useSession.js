@@ -38,14 +38,16 @@ export const getCurrentTrack = () => {
 /**
  * Sets the current track to the next track in the collection, or does nothing if already at the end.
  */
-export const goToNextTrack = () =>
-	goToTrack(useSession.getState().position + 1);
+export const goToNextTrack = () => {
+	const state = useSession.getState();
+	goToTrack(Math.min(state.position + 1, state.collection.content.length - 1));
+}
 
 /**
  * Sets the current track to the previous track in the collection, or does nothing if already at the beginning.
  */
 export const goToPreviousTrack = () =>
-	goToTrack(useSession.getState().position + 1);
+	goToTrack(Math.max(0, useSession.getState().position - 1));
 
 /**
  * Sets the current track to the track at the provided index in the session's associated collection.

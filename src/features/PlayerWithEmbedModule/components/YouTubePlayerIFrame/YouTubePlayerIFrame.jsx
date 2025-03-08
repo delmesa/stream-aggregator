@@ -8,7 +8,7 @@ import { useCallback } from "react";
  *
  * @returns
  */
-const YouTubePlayerIFrame = ({ trackId: videoId }) => {
+const YouTubePlayerIFrame = ({ trackId: videoId, shouldPlay, autoplay, setPlayerState }) => {
 	const playerIframe = useRef();
 	const player = useRef(null);
 
@@ -16,9 +16,9 @@ const YouTubePlayerIFrame = ({ trackId: videoId }) => {
 		player.current.loadVideoById(videoId).playVideo();
 	}, [videoId]);
 
-	const onPlayerStateChange = ({ data }) => {
-		console.log(data);
-	}
+	const onPlayerStateChange = useCallback(({ data }) => {
+		setPlayerState(data);
+	}, [setPlayerState]);
 
 	const loadPlayer = useCallback(() => {
 		if (!player.current) {
@@ -35,7 +35,7 @@ const YouTubePlayerIFrame = ({ trackId: videoId }) => {
 		} else {
 			loadVideo();
 		}
-	}, [loadVideo]);
+	}, [loadVideo, onPlayerStateChange]);
 
 	useEffect(() => {
 		if (!window.YT) {
@@ -50,9 +50,16 @@ const YouTubePlayerIFrame = ({ trackId: videoId }) => {
 		} else {
 			loadPlayer();
 		}
-
-		// return () => {};
 	}, [loadPlayer]);
+
+	useEffect(() => {
+		if (!player.current) return;
+		if (shouldPlay) {
+			player.current.playVideo();
+		} else {
+			player.current.pauseVideo();
+		}
+	}, [loadVideo, shouldPlay]);
 	
     return (
 		<iframe
