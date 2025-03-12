@@ -3,39 +3,39 @@ import styles from "../PlayerIFrame.module.css";
 import ytStyles from "./YouTubePlayerIFrame.module.css";
 import { useEffect } from "react";
 import { useCallback } from "react";
+import { createYouTubePlayerController } from "./YouTubePlayerController";
 
 /**
  *
  * @returns
  */
-const YouTubePlayerIFrame = ({ trackId: videoId, shouldPlay, autoplay, setPlayerState }) => {
+const YouTubePlayerIFrame = ({ trackId: videoId, onPlayerReady }) => {
 	const playerIframe = useRef();
 	const player = useRef(null);
 
 	const loadVideo = useCallback(() => {
-		player.current.loadVideoById(videoId).playVideo();
+		player.current.loadVideoById(videoId);
 	}, [videoId]);
 
-	const onPlayerStateChange = useCallback(({ data }) => {
-		setPlayerState(data);
-	}, [setPlayerState]);
-
 	const loadPlayer = useCallback(() => {
-		if (!player.current) {
+		if (!player.current) { // I think this only updates when videoId does because of the useCallback. Might be source of a future bug.
 			player.current = new window.YT.Player("youtube-player", {
 				playerVars: {
 					"playsinline": 1,
 					"controls": 1,
 				},
 				events: {
-					onReady: loadVideo,
-					onStateChange: onPlayerStateChange,
+					onReady: (e) => {
+						loadVideo();
+						const playerController = createYouTubePlayerController(e.target);
+						onPlayerReady(playerController);
+					},
 				}
 			});
 		} else {
 			loadVideo();
 		}
-	}, [loadVideo, onPlayerStateChange]);
+	}, [loadVideo, onPlayerReady]);
 
 	useEffect(() => {
 		if (!window.YT) {
@@ -51,15 +51,6 @@ const YouTubePlayerIFrame = ({ trackId: videoId, shouldPlay, autoplay, setPlayer
 			loadPlayer();
 		}
 	}, [loadPlayer]);
-
-	useEffect(() => {
-		if (!player.current) return;
-		if (shouldPlay) {
-			player.current.playVideo();
-		} else {
-			player.current.pauseVideo();
-		}
-	}, [loadVideo, shouldPlay]);
 	
     return (
 		<iframe

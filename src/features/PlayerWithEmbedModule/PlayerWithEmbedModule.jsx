@@ -8,7 +8,7 @@ import YouTubePlayerIFrame from "./components/YouTubePlayerIFrame/YouTubePlayerI
 import styles from "./PlayerWithEmbedModule.module.css";
 import Button from "@/components/Button/Button";
 import { useEffect } from "react";
-import { PlayerStates } from "./constants/player";
+import { PlayerStates } from "./lib/playerControllerInterface";
 
 /**
  * An embedded media player from the track's host with custom controls.
@@ -16,24 +16,46 @@ import { PlayerStates } from "./constants/player";
  */
 const PlayerWithEmbedModule = () => {
     const currentTrack = useCurrentTrack();
+	const [playerController, setPlayerController] = useState(null);
     // only intended for the player to communicate its state—does not change actual player state
     const [playerState, setPlayerState] = useState(PlayerStates.UNSTARTED);
+	const [nextStateIsPlay, setNextStateIsPlay] = useState(false);
 	const [isLoop, setIsLoop] = useState(false);
     const [isAutoplay, setIsAutoplay] = useState(true);
-    const [shouldPlay, setShouldPlay] = useState(isAutoplay);
+
+	// handle necessary event setup when the player controller changes
+	useEffect(() => {
+		if (!playerController) return;
+
+		if (playerController) {
+			playerController.addEventListener("onStateChange", 
+				({ data }) => setPlayerState(data));
+		}
+
+		return () => playerController.clearEventListeners();
+	}, [playerController]);
 
     // functions that alter the playstate aren't guaranteed to change the actual state of the player
     const togglePlayState = () => {
-        switch (playerState) {
+		if (!playerController) return;
+
+        switch (playerController.getPlayerState()) {
             case PlayerStates.PLAYING:
+				playerController.pause();
+				setNextStateIsPlay(false);
+				break;
             case PlayerStates.PAUSED:
-                setShouldPlay(playerState - 1); // only works because of specific enum values
+				playerController.play();
+				setNextStateIsPlay(true);
                 break;
             case PlayerStates.BUFFERING:
-                setShouldPlay((state) => !state);
+                // need to handle this weird because "buffering" is not a true state
+				// but YT includes it anyway
+				setNextStateIsPlay(state => !state);
                 break;
             default:
-                setShouldPlay(true);
+                playerController.play();
+				setNextStateIsPlay();
         }
     };
 
@@ -42,27 +64,19 @@ const PlayerWithEmbedModule = () => {
     useEffect(() => {
         if (playerState === PlayerStates.ENDED) {
 			if (isLoop) {
-				// go to beginning of track
-			} else {
+				playerController.seekTo(0);
+			} else if (isAutoplay) {
 				goToNextTrack();
 			}
         }
-    }, [playerState, isLoop]);
-
-    useEffect(() => {
-        setShouldPlay(isAutoplay);
-		setIsLoop(false);
-    }, [isAutoplay, currentTrack]);
+    }, [playerState, isLoop, isAutoplay, playerController]);
 
     return (
         <div className={styles.module}>
             <div className={styles.embedContainer}>
                 <YouTubePlayerIFrame
                     trackId={currentTrack.externalId}
-                    shouldPlay={shouldPlay}
-					loop={isLoop}
-                    autoplay={isAutoplay}
-                    setPlayerState={setPlayerState}
+                    onPlayerReady={setPlayerController}
                 />
             </div>
             <div className={styles.playerControls}>
@@ -75,7 +89,7 @@ const PlayerWithEmbedModule = () => {
                     </Button>
                     <Button id={styles.playBtn} onClick={togglePlayState}>
                         {playerState === PlayerStates.PLAYING ||
-                        (playerState === PlayerStates.BUFFERING && shouldPlay) ? (
+                        (playerState === PlayerStates.BUFFERING && nextStateIsPlay) ? (
                             <span className="material-icons">pause</span>
                         ) : (
                         	<span className="material-icons">play_arrow</span>
